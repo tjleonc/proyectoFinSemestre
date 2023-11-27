@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
 import Controlador.Registro;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import proyectofinsemestre.Libros;
+import sql.Conexion;
 
 /**
  *
@@ -17,6 +19,16 @@ public class modificarLibro extends javax.swing.JFrame {
     /**
      * Creates new form modificarLibro
      */
+    /*Ponerlo después de hacer la clase de modificar*/
+    public void limpiarCajas(){
+        tf_buscar.setText(null);
+        tf_titulo.setText(null);
+        tf_autor.setText(null);
+        tf_añoPublicacion.setText(null);
+        tf_numPaginas.setText(null);
+        tf_genLiterario.setText(null);
+    }
+    
     public modificarLibro() {
         initComponents();
     }
@@ -34,24 +46,23 @@ public class modificarLibro extends javax.swing.JFrame {
         tf_buscar = new javax.swing.JTextField();
         bt_buscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tf_id = new javax.swing.JTextField();
         tf_autor = new javax.swing.JTextField();
         tf_titulo = new javax.swing.JTextField();
         tf_añoPublicacion = new javax.swing.JTextField();
         tf_numPaginas = new javax.swing.JTextField();
         tf_genLiterario = new javax.swing.JTextField();
         bt_grabar = new javax.swing.JButton();
+        tf_id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Buscar libro por titulo o autor:");
+        jLabel1.setText("Buscar libro por genero literario:");
 
         tf_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,9 +80,6 @@ public class modificarLibro extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel2.setText("Modificar");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel3.setText("ID");
-
         jLabel4.setText("Autor");
 
         jLabel5.setText("Titulo");
@@ -82,16 +90,16 @@ public class modificarLibro extends javax.swing.JFrame {
 
         jLabel8.setText("Genero Literario");
 
-        tf_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_idActionPerformed(evt);
-            }
-        });
-
         bt_grabar.setText("Grabar");
         bt_grabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_grabarActionPerformed(evt);
+            }
+        });
+
+        tf_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_idActionPerformed(evt);
             }
         });
 
@@ -117,14 +125,13 @@ public class modificarLibro extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tf_autor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tf_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(73, 73, 73)
                         .addComponent(bt_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55))
@@ -137,7 +144,7 @@ public class modificarLibro extends javax.swing.JFrame {
                         .addComponent(tf_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(bt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 43, Short.MAX_VALUE))))
+                        .addGap(0, 20, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,19 +156,18 @@ public class modificarLibro extends javax.swing.JFrame {
                     .addComponent(bt_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(tf_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(13, 13, 13)
+                .addComponent(tf_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_autor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bt_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -174,7 +180,7 @@ public class modificarLibro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tf_genLiterario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -184,27 +190,53 @@ public class modificarLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_buscarActionPerformed
 
-    private void tf_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_idActionPerformed
-
     private void bt_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_grabarActionPerformed
         // TODO add your handling code here:
+            Libros libro = new Libros();
+            libro.setId(Integer.parseInt(this.tf_id.getText().trim()));
+            libro.setAutor(this.tf_autor.getText().trim());
+            libro.setTitulo(this.tf_titulo.getText().trim());
+            libro.setAño_de_publicacion(Integer.parseInt(this.tf_añoPublicacion.getText().trim()));
+            libro.setNumero_paginas(Integer.parseInt(this.tf_numPaginas.getText().trim()));
+            libro.setGen_literario(this.tf_genLiterario.getText().trim());
+        
+        if (Registro.modificarLibro(libro)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Registro Modificado");
+            limpiarCajas();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "NO se modificó!!!");
+            limpiarCajas();
+        }       
+        
+        
+        
+        
     }//GEN-LAST:event_bt_grabarActionPerformed
 
     private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
-        Libros lib = Registro.buscarPorLibro(Integer.parseInt(tf_id.getText()));
-            if(lib == null) {
-                JOptionPane.showMessageDialog(null, "rut no encontrado");
-            } else {
-                this.tf_id.setText(lib.getId() + "");
-                this.tf_titulo.setText(lib.getTitulo());
-                this.tf_autor.setText(lib.getAutor());
-                this.tf_añoPublicacion.setText(lib.getAño_de_publicacion() + "");
-                this.tf_numPaginas.setText(lib.getNumero_paginas() + ""); 
-                this.tf_genLiterario.setText(lib.getGen_literario());
+        
+        try{
+            Libros buscado = Registro.buscarPorLibro(tf_buscar.getText());
+            if(buscado == null){
+                System.out.println("No existe");
+            }else{
+                tf_id.setText(buscado.getId() + "");
+                tf_titulo.setText(buscado.getTitulo());
+                tf_autor.setText(buscado.getAutor());
+                tf_añoPublicacion.setText(buscado.getAño_de_publicacion() + "");
+                tf_numPaginas.setText(buscado.getNumero_paginas() + "");
+                tf_genLiterario.setText(buscado.getGen_literario());
             }
+            
+        }catch(Exception ex){
+            System.err.println("Error" + ex);
+        }
+
     }//GEN-LAST:event_bt_buscarActionPerformed
+
+    private void tf_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_idActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,7 +278,6 @@ public class modificarLibro extends javax.swing.JFrame {
     private javax.swing.JButton bt_grabar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

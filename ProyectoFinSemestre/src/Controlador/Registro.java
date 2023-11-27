@@ -17,14 +17,13 @@ public class Registro {
     public static boolean agregarLibro(Libros dto){
         try{
             Connection conexion = Conexion.getConexion();
-            String query = "INSERT INTO book(id,titulo, autor, año_de_publicacion, numero_paginas, gen_literario) VALUES (?,?,?,?,?,?)";
+            String query = "INSERT INTO book(titulo, autor, año_de_publicacion, numero_paginas, gen_literario) VALUES (?,?,?,?,?)";
             PreparedStatement insertar = conexion.prepareStatement(query);
-            insertar.setInt(1, dto.getId());
-            insertar.setString(2, dto.getTitulo());
-            insertar.setString(3, dto.getAutor());
-            insertar.setInt(4, dto.getAño_de_publicacion());
-            insertar.setInt(5, dto.getNumero_paginas());
-            insertar.setString(6, dto.getGen_literario());
+            insertar.setString(1, dto.getTitulo());
+            insertar.setString(2, dto.getAutor());
+            insertar.setInt(3, dto.getAño_de_publicacion());
+            insertar.setInt(4, dto.getNumero_paginas());
+            insertar.setString(5, dto.getGen_literario());
             insertar.execute();
             insertar.close();
             conexion.close();
@@ -80,21 +79,21 @@ public class Registro {
         }
     }
     /*Falta: Buscar por libro*/
-    public static  Libros buscarPorLibro(int idBuscado){
+    public static  Libros buscarPorLibro(String genLiterarioBuscado){
         ArrayList<Libros> listaLibros = new ArrayList<Libros>();
         Libros libroBuscado = null;
         try{
             Connection conexion = Conexion.getConexion();
-            String query = "SELECT id,titulo,autor,año_de_aparicion,numero_paginas,gen_literario FROM book WHERE id=?";
+            String query = "SELECT id,titulo,autor,año_de_publicacion,numero_paginas,gen_literario FROM book WHERE gen_literario=?";
             PreparedStatement buscarPorLibro = conexion.prepareStatement(query);
-            buscarPorLibro.setInt(1, idBuscado);
+            buscarPorLibro.setString(1, genLiterarioBuscado);
             ResultSet rs = buscarPorLibro.executeQuery();
             while(rs.next()){
                 Libros libEncontrado = new Libros();
-                libEncontrado.setId(rs.getInt("rut"));
-                libEncontrado.setTitulo(rs.getString("nombre"));
-                libEncontrado.setAutor(rs.getString("apellido"));
-                libEncontrado.setAño_de_publicacion(rs.getInt("Año_de_publicacion"));
+                libEncontrado.setId(rs.getInt("id"));
+                libEncontrado.setTitulo(rs.getString("titulo"));
+                libEncontrado.setAutor(rs.getString("autor"));
+                libEncontrado.setAño_de_publicacion(rs.getInt("año_de_publicacion"));
                 libEncontrado.setNumero_paginas(rs.getInt("numero_paginas"));
                 libEncontrado.setGen_literario(rs.getString("gen_literario"));
                 libroBuscado = libEncontrado;
@@ -106,8 +105,64 @@ public class Registro {
             System.out.println("Error al listar usuario"+e.getMessage());
         }
         return null;
-        
-    
     }
     
+    public static  Libros buscarPorLibro(int añoBuscado){
+        ArrayList<Libros> listaLibros = new ArrayList<Libros>();
+        Libros libroBuscado = null;
+        try{
+            Connection conexion = Conexion.getConexion();
+            String query = "SELECT id,titulo,autor,año_de_publicacion,numero_paginas,gen_literario FROM book WHERE año_de_publicacion=?";
+            PreparedStatement buscarPorLibro = conexion.prepareStatement(query);
+            buscarPorLibro.setInt(1, añoBuscado);
+            ResultSet rs = buscarPorLibro.executeQuery();
+            while(rs.next()){
+                Libros libEncontrado = new Libros();
+                libEncontrado.setId(rs.getInt("id"));
+                libEncontrado.setTitulo(rs.getString("titulo"));
+                libEncontrado.setAutor(rs.getString("autor"));
+                libEncontrado.setAño_de_publicacion(rs.getInt("año_de_publicacion"));
+                libEncontrado.setNumero_paginas(rs.getInt("numero_paginas"));
+                libEncontrado.setGen_literario(rs.getString("gen_literario"));
+                libroBuscado = libEncontrado;
+                return libroBuscado;
+            }
+        }catch(SQLException s){
+            System.out.println("Error SQL al listar usuario"+s.getMessage());
+        }catch(Exception e){
+            System.out.println("Error al listar usuario"+e.getMessage());
+        }
+        return null;
+    }
+    
+    
+    
+    public static Boolean modificarLibro(Libros dto){
+        try{
+            Connection conexion = Conexion.getConexion();
+            String query = "UPDATE book set titulo=?, autor=?, año_de_publicacion=?, numero_paginas=?, gen_literario=? where id=?";
+            PreparedStatement insertar = conexion.prepareStatement(query);
+            insertar.setString(1, dto.getTitulo());
+            insertar.setString(2, dto.getAutor());
+            insertar.setInt(3, dto.getAño_de_publicacion());
+            insertar.setInt(4, dto.getNumero_paginas());
+            insertar.setString(5, dto.getGen_literario());
+            insertar.setInt(6, dto.getId());
+            insertar.execute();
+            insertar.close();
+            conexion.close();
+            return true;
+        }catch(SQLException s){
+            System.out.println("Error SQL al modificar Libro"+s.getMessage());
+            return false;
+        }catch(Exception e){
+            System.out.println("Error al modificar Libro"+e.getMessage());
+            return false;
+        }
+    }
+    
+    
+
 }
+     
+ 

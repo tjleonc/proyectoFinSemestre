@@ -19,6 +19,14 @@ public class agregarLibro extends javax.swing.JFrame {
     public agregarLibro() {
         initComponents();
     }
+    
+    public void limpiarCajas(){
+        tf_titulo.setText(null);
+        tf_autor.setText(null);
+        tf_añopublicacion.setText(null);
+        tf_numpaginas.setText(null);
+        tf_genliterario.setText(null);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,15 +37,12 @@ public class agregarLibro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tf_id = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tf_titulo = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -51,9 +56,6 @@ public class agregarLibro extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 0, 18)); // NOI18N
-        jLabel1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 0, 18)); // NOI18N
         jLabel2.setText("TITULO");
@@ -72,8 +74,6 @@ public class agregarLibro extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 0, 18)); // NOI18N
         jLabel7.setText("GENERO LITERARIO");
-
-        jScrollPane1.setViewportView(tf_id);
 
         jScrollPane2.setViewportView(tf_titulo);
 
@@ -109,11 +109,9 @@ public class agregarLibro extends javax.swing.JFrame {
                                     .addGap(113, 113, 113)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel2)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel6)))
@@ -137,11 +135,7 @@ public class agregarLibro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,7 +166,6 @@ public class agregarLibro extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
             Libros libro = new Libros();
-            libro.setId(Integer.parseInt(this.tf_id.getText().trim()));
             libro.setAutor(this.tf_autor.getText().trim());
             libro.setTitulo(this.tf_titulo.getText().trim());
             libro.setAño_de_publicacion(Integer.parseInt(this.tf_añopublicacion.getText().trim()));
@@ -181,11 +174,13 @@ public class agregarLibro extends javax.swing.JFrame {
         
         if (Registro.agregarLibro(libro)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Registro Grabado");
+            limpiarCajas();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "NO se registro!!!");
         }        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -223,14 +218,12 @@ public class agregarLibro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -239,7 +232,6 @@ public class agregarLibro extends javax.swing.JFrame {
     private javax.swing.JTextPane tf_autor;
     private javax.swing.JTextPane tf_añopublicacion;
     private javax.swing.JTextPane tf_genliterario;
-    private javax.swing.JTextPane tf_id;
     private javax.swing.JTextPane tf_numpaginas;
     private javax.swing.JTextPane tf_titulo;
     // End of variables declaration//GEN-END:variables

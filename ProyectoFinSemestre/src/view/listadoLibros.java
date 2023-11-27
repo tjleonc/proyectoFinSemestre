@@ -27,6 +27,7 @@ public class listadoLibros extends javax.swing.JFrame {
         initComponents();
     }
     
+    
     class jpanelGradient extends JPanel{ //codigo para ponerle color al bg
         @Override
         protected void  paintComponent(Graphics g){
@@ -78,11 +79,16 @@ public class listadoLibros extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("Filtrar por libro:");
+        jLabel1.setText("Filtrar por titulo o autor:");
 
         tf_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_buscarActionPerformed(evt);
+            }
+        });
+        tf_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_buscarKeyReleased(evt);
             }
         });
 
@@ -135,15 +141,6 @@ public class listadoLibros extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +148,16 @@ public class listadoLibros extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,6 +196,12 @@ public class listadoLibros extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // TODO add your handling code here:
+    //    Libros buscado = Registro.buscarPorLibro((tf_buscar.getText()));
+      //  if(buscado == null) {
+        //    JOptionPane.showMessageDialog(null, "Libro no encontrado");
+        //} else {
+         //   jTextPane1.setText(buscado.toString());
+       // }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -224,6 +236,11 @@ public class listadoLibros extends javax.swing.JFrame {
         eliminarLibros goLibros = new eliminarLibros();
         goLibros.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void tf_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_buscarKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_tf_buscarKeyReleased
 
         private void actualizarTablaLibros() {
         ArrayList<Libros> lista = Registro.mostrarTodos();

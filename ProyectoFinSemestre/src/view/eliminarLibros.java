@@ -41,7 +41,7 @@ public class eliminarLibros extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         resultadoTxt = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 0, 24)); // NOI18N
         jLabel1.setText("Eliminar Libro");
